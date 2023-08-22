@@ -36,7 +36,8 @@ export interface User {
   username: string;
   password: string;
   age: number;
-  subscribed: boolean;
+  subscribed: boolean | undefined;
+  socialMedia: SocialMedia | undefined;
 }
 
 export interface SocialMedia {
@@ -46,7 +47,7 @@ export interface SocialMedia {
 
 export const AUTH_PACKAGE_NAME = "auth";
 
-export interface UserServiceClient {
+export interface UsersServiceClient {
   createUser(request: CreateUserDto): Observable<User>;
 
   findAllUsers(request: Empty): Observable<Users>;
@@ -60,7 +61,7 @@ export interface UserServiceClient {
   queryUsers(request: Observable<PaginationDto>): Observable<Users>;
 }
 
-export interface UserServiceController {
+export interface UsersServiceController {
   createUser(request: CreateUserDto): Promise<User> | Observable<User> | User;
 
   findAllUsers(request: Empty): Promise<Users> | Observable<Users> | Users;
@@ -74,7 +75,7 @@ export interface UserServiceController {
   queryUsers(request: Observable<PaginationDto>): Observable<Users>;
 }
 
-export function UserServiceControllerMethods() {
+export function UsersServiceControllerMethods() {
   return function (constructor: Function) {
     const grpcMethods: string[] = ["createUser", "findAllUsers", "findOneUser", "updateUser", "removeUser"];
     for (const method of grpcMethods) {
